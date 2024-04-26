@@ -1,0 +1,23 @@
+{
+ "creation": "2024-02-29 15:23:54.368006",
+ "docstatus": 0,
+ "doctype": "Number Card",
+ "dynamic_filters_json": "{}",
+ "filters_json": "{}",
+ "function": "Count",
+ "idx": 5,
+ "is_public": 0,
+ "is_standard": 1,
+ "label": "Student Fees Pending (2023-2024)",
+ "modified": "2024-02-29 16:43:44.520549",
+ "modified_by": "Administrator",
+ "module": "Education",
+ "name": "Student Fees Pending",
+ "owner": "Administrator",
+ "report_field": "outstanding_amount",
+ "report_function": "Sum",
+ "report_name": "Student Fee Collection",
+ "show_percentage_stats": 1,
+ "stats_time_interval": "Daily",
+ "type": "Report"
+}

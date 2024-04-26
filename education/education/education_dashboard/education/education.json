@@ -1,0 +1,71 @@
+{
+ "cards": [
+  {
+   "card": "Student Fee Collection Paid"
+  },
+  {
+   "card": "Student Fees Pending"
+  },
+  {
+   "card": "Total Students Absent (Today)"
+  },
+  {
+   "card": "Total Students Present (Today)"
+  },
+  {
+   "card": "Total Strength(Student)"
+  },
+  {
+   "card": "Total Attendance (Today)"
+  },
+  {
+   "card": "Paid Amount"
+  }
+ ],
+ "charts": [
+  {
+   "chart": "Student Fees Count",
+   "width": "Half"
+  },
+  {
+   "chart": "Student Fees",
+   "width": "Half"
+  },
+  {
+   "chart": "Student Fee Collection",
+   "width": "Half"
+  },
+  {
+   "chart": "Program wise Fee Collection",
+   "width": "Half"
+  },
+  {
+   "chart": "Student Attendance",
+   "width": "Half"
+  },
+  {
+   "chart": "Student Monthly Attendance Sheet",
+   "width": "Half"
+  },
+  {
+   "chart": "Assessment Report",
+   "width": "Half"
+  },
+  {
+   "chart": "Assessment Result",
+   "width": "Half"
+  }
+ ],
+ "creation": "2023-11-20 11:02:46.764659",
+ "dashboard_name": "Education",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 0,
+ "is_default": 1,
+ "is_standard": 1,
+ "modified": "2024-03-25 10:53:21.180540",
+ "modified_by": "Administrator",
+ "module": "Education",
+ "name": "Education",
+ "owner": "Administrator"
+}

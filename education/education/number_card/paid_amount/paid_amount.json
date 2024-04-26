@@ -1,0 +1,22 @@
+{
+ "creation": "2024-03-25 10:53:21.077817",
+ "docstatus": 0,
+ "doctype": "Number Card",
+ "filters_json": "{}",
+ "function": "Count",
+ "idx": 0,
+ "is_public": 0,
+ "is_standard": 1,
+ "label": "Paid Amount",
+ "modified": "2024-03-25 10:53:21.159702",
+ "modified_by": "Administrator",
+ "module": "Education",
+ "name": "Paid Amount",
+ "owner": "Administrator",
+ "report_field": "paid_amount",
+ "report_function": "Sum",
+ "report_name": "Student Fee Collection",
+ "show_percentage_stats": 1,
+ "stats_time_interval": "Daily",
+ "type": "Report"
+}

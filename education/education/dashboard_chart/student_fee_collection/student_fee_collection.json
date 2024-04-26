@@ -1,0 +1,38 @@
+{
+ "chart_name": "Student Fee Collection",
+ "chart_type": "Report",
+ "creation": "2023-11-20 11:23:11.237436",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "dynamic_filters_json": "{}",
+ "filters_json": "{}",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "modified": "2023-11-20 11:24:53.315281",
+ "modified_by": "Administrator",
+ "module": "Education",
+ "name": "Student Fee Collection",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "report_name": "Student Fee Collection",
+ "roles": [],
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "x_field": "student_name",
+ "y_axis": [
+  {
+   "y_field": "grand_total"
+  },
+  {
+   "y_field": "paid_amount"
+  },
+  {
+   "y_field": "outstanding_amount"
+  }
+ ]
+}

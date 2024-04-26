@@ -1,0 +1,32 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-11-07 18:35:53.761759",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "board_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "board_name",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Board Name",
+   "options": "CBSE\nISC\nICSE\nNIOS\nUP Board"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-11-07 18:38:22.112357",
+ "modified_by": "Administrator",
+ "module": "Education",
+ "name": "Board",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,200 @@
+from __future__ import unicode_literals
+import frappe
+from frappe import auth
+from frappe.query_builder import DocType
+from pypika.terms import Case
+
+import json
+from frappe.utils import floor, flt, today, cint
+from frappe import _
+
+@frappe.whitelist( allow_guest=True )
+def login(usr, pwd):
+    try:
+        login_manager = frappe.auth.LoginManager()
+        login_manager.authenticate(user=usr, pwd=pwd)
+        login_manager.post_login()
+
+    except frappe.exceptions.AuthenticationError:
+        frappe.clear_messages()
+        frappe.local.response["message"] = {
+            "success_key": 0,
+            "error": {
+                "code": 401,
+                "message":"Invalid Username / Password"
+            },
+            "data": {}
+        }
+        return #Ture
+    
+    
+    api_generate = generate_keys(frappe.session.user)
+    user = frappe.get_doc('User', frappe.session.user)
+    
+    students = frappe.db.get_list("Student",fields=["name", "first_name","gender"])
+
+    studata = []
+    stuprogdata = []
+    stugrpdata = []
+    for stu in students:
+        #student = '{"student_id":"'+str(stu["name"])+'",'
+        #student += '"student_name":"'+str(stu["first_name"])+'"}'
+
+        students_program = frappe.db.get_list("Program Enrollment", 
+                            filters={"student": stu["name"]},
+                            fields=["student","program"])
+        #for stupgdata in students_program:
+         #   stuprogstr += stupgdata
+
+        stuprogdata.append(students_program)
+        students_group = frappe.db.get_list("Student Group",
+                            filters={"student": stu["name"]})
+        #students_group = frappe.db.get_list("Student Group", 
+         #                   filters={"student": stu["name"]},
+          #                  fields=["name"])
+        #studata.append(json.loads(student))
+        stugrpdata.append(students_group)
+        for stugrp in students_group:
+            studentgrp = '{"student_id":"'+str(stu["name"])+'",'
+            studentgrp += '"section":"'+str(stugrp["name"])+'"}'
+        #stugrpdata.append(json.loads(studentgrp))
+
+
+   # studata += ']'
+   # stugrpdata += ']'
+
+ #   studata = json.loads(studata)
+#    stugrpdata = json.loads(stugrpdata)
+
+#    grp = frappe.get_doc('Student Group')
+#
+ #   stu = frappe.qb.DocType('Student')
+  #  pro_en = frappe.qb.DocType('Program Enrollment')
+   # stu_grp = frappe.qb.DocType('Student Group')
+#
+ #   query = (frappe.qb.from_(stu)
+   #             .inner_join(pro_en)
+  #              .on(stu.name == pro_en.student)
+    #            .select(stu.name, pro_en.program)).run(as_dict=True)
+
+    values = {'user_email': user.email}
+    data = frappe.db.sql("""
+    SELECT
+        stu.name,
+        stu.first_name,
+        pe.program,
+        tg.name
+    FROM `tabProgram Enrollment` pe,
+        `tabStudent` stu,
+        `tabStudent Group Student` tgs,
+        `tabStudent Group` tg
+    WHERE stu.student_email_id = %(user_email)s AND
+          pe.student = stu.name AND
+          stu.name = tgs.student AND
+          tg.name = tgs.parent
+    """, values=values, as_dict=0)
+
+
+   # for stu in students:
+    #    for program in students_program
+     #       if(stu["name"] == program["student"]):
+      #          stu["program"] = program["program"]
+
+   # student["last_name"] = student_program["program"]
+
+    # Query company[school] table to get the value for initial_setup field.
+    # initial_setup is used to determine the school setup has been completed or not.
+    # If setup completed, the count of all the table is not necessary.
+    list_company = frappe.db.get_list("Company", fields=['company_name', 'custom_initial_setup'],)
+    company_name = list_company[0].company_name
+    custom_initial_setup = list_company[0].custom_initial_setup
+
+        
+    if(custom_initial_setup == 0):
+        count_student = frappe.db.count('Student')
+        count_course = frappe.db.count('Course')
+        count_program = frappe.db.count('Program')
+        count_student_group = frappe.db.count('Student Group')
+        count_program_enrollment = frappe.db.count('Program Enrollment')
+        count_instructor = frappe.db.count('Instructor')
+        count_employee = frappe.db.count('Employee')
+        
+        if (count_student > 1 and
+            count_course > 1 and
+            count_program > 1 and
+            count_student_group > 1 and
+            count_program_enrollment > 1 and
+            count_instructor > 1 and
+            count_employee > 1) :
+            {
+                frappe.db.set_value("Company", company_name, {'custom_initial_setup': 1})
+            }
+    
+
+        frappe.response["message"] = {
+            "successs": 1,
+            "error": {
+                "code": 200,
+                "message": "Authentication Success"
+            },
+            "data": {
+                "sid": frappe.session.sid,
+                "api_key":user.api_key,
+                "api_secret":api_generate,
+                "username":user.username,
+                "email":user.email,
+                "user_image":user.user_image,
+                "custom_initial_setup":custom_initial_setup,
+                "childrens":students,
+                "program":stuprogdata,
+                "section":stugrpdata,
+                "school":company_name,
+                "course_count" : count_course,
+                "program_count": count_program,
+                "student_group_count": count_student_group,
+                "student_count": count_student,
+                "program_enrollment_count": count_program_enrollment,
+                "instructor_count": count_instructor,
+                "employee_count": count_employee,
+                "roles":user.roles
+              }
+        }
+    else:
+        frappe.response["message"] = {
+            "success": 1,
+            "error": {
+                "code": 200,
+                "message": "Authentication Success"
+            },
+            "data": {
+                "sid": frappe.session.sid,
+                "api_key":user.api_key,
+                "api_secret":api_generate,
+                "username":user.username,
+                "email":user.email,
+                "user_image":user.user_image,
+                "custom_initial_setup":custom_initial_setup,
+                "school":company_name,
+                "api_key":user.api_key,
+                "api_secret":api_generate,
+                "username":user.username,
+                "email":user.email,
+                "user_image":user.user_image,
+                "custom_initial_setup":custom_initial_setup,
+                "school":company_name,
+                "roles":user.roles
+            }
+            }    
+
+def generate_keys(user):
+    user_details = frappe.get_doc('User', user)
+    api_secret = frappe.generate_hash(length=15)
+
+    if not user_details.api_key:
+        api_key = frappe.generate_hash(length=15)
+        user_details.api_key = api_key
+
+    user_details.api_secret = api_secret
+    user_details.save()
+
+    return api_secret

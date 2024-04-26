@@ -1,0 +1,53 @@
+{
+ "add_total_row": 1,
+ "columns": [],
+ "creation": "2024-02-29 15:18:07.283215",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [
+  {
+   "fieldname": "Pending Fees",
+   "fieldtype": "Currency",
+   "label": "Pending Fees",
+   "mandatory": 0,
+   "wildcard_filter": 0
+  }
+ ],
+ "idx": 0,
+ "is_standard": "Yes",
+ "json": "{}",
+ "letterhead": null,
+ "modified": "2024-02-29 15:18:07.283215",
+ "modified_by": "Administrator",
+ "module": "Education",
+ "name": "Fees Pending",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Education Settings",
+ "report_name": "Fees Pending",
+ "report_type": "Report Builder",
+ "roles": [
+  {
+   "role": "Guest"
+  },
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Education Manager"
+  },
+  {
+   "role": "Super Admin"
+  },
+  {
+   "role": "Parent"
+  },
+  {
+   "role": "Orange"
+  },
+  {
+   "role": "Admin"
+  }
+ ]
+}

@@ -1,0 +1,45 @@
+{
+ "cards": [
+  {
+   "card": "Student Fee Collection"
+  }
+ ],
+ "charts": [
+  {
+   "chart": "Assessment Report",
+   "width": "Half"
+  },
+  {
+   "chart": "Assessment Result",
+   "width": "Half"
+  },
+  {
+   "chart": "Student Attendance",
+   "width": "Half"
+  },
+  {
+   "chart": "Student Fee Collection",
+   "width": "Half"
+  },
+  {
+   "chart": "Student Fees",
+   "width": "Half"
+  },
+  {
+   "chart": "Student Fees Count",
+   "width": "Half"
+  }
+ ],
+ "creation": "2024-04-06 15:29:27.241376",
+ "dashboard_name": "My Dashboard",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 0,
+ "is_default": 1,
+ "is_standard": 1,
+ "modified": "2024-04-06 15:31:46.005942",
+ "modified_by": "demo_admin@schoolezy.in",
+ "module": "Education",
+ "name": "My Dashboard",
+ "owner": "demo_admin@schoolezy.in"
+}

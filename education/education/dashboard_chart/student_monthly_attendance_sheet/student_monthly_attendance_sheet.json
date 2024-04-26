@@ -1,0 +1,35 @@
+{
+ "chart_name": "Student Monthly Attendance Sheet",
+ "chart_type": "Report",
+ "creation": "2023-11-20 11:57:08.614900",
+ "custom_options": "{\"x_field\": \"student_name\", \"chart_type\": \"Line\", \"y_axis_fields\": [{\"idx\": 1, \"__islocal\": true, \"name\": \"row 1\", \"y_field\": \"total_present\"}, {\"idx\": 2, \"__islocal\": true, \"name\": \"row 2\", \"y_field\": \"total_absent\"}], \"y_fields\": [\"total_present\", \"total_absent\"], \"colors\": [null, null]}",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "filters_json": "{\"month\":\"Nov\",\"year\":\"2023\",\"student_group\":\"1-A\"}",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "modified": "2023-11-20 11:58:12.566093",
+ "modified_by": "Administrator",
+ "module": "Education",
+ "name": "Student Monthly Attendance Sheet",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "report_name": "Student Monthly Attendance Sheet",
+ "roles": [],
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "x_field": "student_name",
+ "y_axis": [
+  {
+   "y_field": "total_present"
+  },
+  {
+   "y_field": "total_absent"
+  }
+ ]
+}
