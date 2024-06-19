@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_import": 1,
+ "allow_rename": 1,
  "autoname": "naming_series:",
  "creation": "2015-11-04 15:56:30.004034",
  "doctype": "DocType",
@@ -36,13 +37,6 @@
   {
    "fieldname": "column_break_5",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "label": "Naming Series",
-   "options": "EDU-INS-.YYYY.-",
-   "set_only_once": 1
   },
   {
    "fetch_from": "employee.department",
@@ -86,14 +80,22 @@
    "label": "Gender",
    "options": "Gender",
    "read_only_depends_on": "employee"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "EDU-INS-.YYYY.-",
+   "set_only_once": 1
   }
  ],
  "image_field": "image",
  "links": [],
- "modified": "2020-07-23 18:33:57.904398",
+ "modified": "2024-06-12 16:56:52.099383",
  "modified_by": "Administrator",
  "module": "Education",
  "name": "Instructor",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -112,14 +114,13 @@
    "read": 1,
    "report": 1,
    "role": "Education Manager",
-   "set_user_permissions": 1,
    "share": 1,
    "write": 1
   }
  ],
- "restrict_to_domain": "",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "states": [],
  "title_field": "instructor_name"
 }

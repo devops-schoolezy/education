@@ -7,12 +7,14 @@
  ],
  "content": "[{\"type\":\"onboarding\",\"data\":{\"onboarding_name\":\"Education\",\"col\":12}},{\"type\":\"chart\",\"data\":{\"chart_name\":\"Program Enrollments\",\"col\":12}},{\"type\":\"spacer\",\"data\":{\"col\":12}},{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Your Shortcuts</b></span>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Student\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Instructor\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Program\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Course\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fees\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Student Monthly Attendance Sheet\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Course Scheduling Tool\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Student Attendance Tool\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Dashboard\",\"col\":3}},{\"type\":\"spacer\",\"data\":{\"col\":12}},{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Reports &amp; Masters</b></span>\",\"col\":12}},{\"type\":\"card\",\"data\":{\"card_name\":\"Student and Instructor\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Content Masters\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Settings\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Admission\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Fees\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Schedule\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Attendance\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Assessment\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Assessment Reports\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Tools\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Other Reports\",\"col\":4}}]",
  "creation": "2020-03-02 17:22:57.066401",
+ "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
  "for_user": "",
  "hide_custom": 0,
  "icon": "education",
  "idx": 0,
+ "is_hidden": 0,
  "label": "Education",
  "links": [
   {
@@ -684,17 +686,18 @@
    "type": "Link"
   }
  ],
- "modified": "2022-12-12 15:34:55.027081",
+ "modified": "2024-05-23 14:03:19.705867",
  "modified_by": "Administrator",
  "module": "Education",
  "name": "Education",
+ "number_cards": [],
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
  "restrict_to_domain": "",
  "roles": [],
- "sequence_id": 9.0,
+ "sequence_id": 2.0,
  "shortcuts": [
   {
    "color": "Grey",

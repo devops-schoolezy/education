@@ -1,0 +1,22 @@
+{
+ "creation": "2024-05-17 16:50:11.737669",
+ "docstatus": 0,
+ "doctype": "Number Card",
+ "filters_json": "{}",
+ "function": "Count",
+ "idx": 0,
+ "is_public": 0,
+ "is_standard": 1,
+ "label": "Outstanding Amount",
+ "modified": "2024-05-17 16:50:11.772536",
+ "modified_by": "Administrator",
+ "module": "Education",
+ "name": "Outstanding Amount",
+ "owner": "Administrator",
+ "report_field": "outstanding_amount",
+ "report_function": "Sum",
+ "report_name": "Student Fee Collection",
+ "show_percentage_stats": 1,
+ "stats_time_interval": "Daily",
+ "type": "Report"
+}

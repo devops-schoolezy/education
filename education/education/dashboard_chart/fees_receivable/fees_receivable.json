@@ -1,0 +1,41 @@
+{
+ "chart_name": "Fees Receivable",
+ "chart_type": "Report",
+ "creation": "2024-05-15 16:27:36.075462",
+ "custom_options": "{\"x_field\": \"account\", \"chart_type\": \"Bar\", \"y_axis_fields\": [{\"idx\": 1, \"__islocal\": true, \"name\": \"row 1\", \"y_field\": \"balance\", \"color\": \"#29CD42\"}, {\"idx\": 2, \"__islocal\": true, \"name\": \"row 2\", \"y_field\": \"debit\", \"color\": \"#449CF0\"}, {\"idx\": 3, \"__islocal\": true, \"name\": \"row 3\", \"y_field\": \"credit\", \"color\": \"#CB2929\"}], \"y_fields\": [\"balance\", \"debit\", \"credit\"], \"colors\": [\"#29CD42\", \"#449CF0\", \"#CB2929\"]}",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "filters_json": "{\"company\":\"THE SCV CENTRAL SCHOOL\",\"from_date\":\"2024-04-01\",\"to_date\":\"2025-03-31\",\"account\":[\"Fee Receivable - SCV\"],\"party\":[],\"group_by\":\"Group by Voucher (Consolidated)\",\"presentation_currency\":\"INR\",\"cost_center\":[],\"project\":[],\"include_dimensions\":1,\"include_default_book_entries\":1}",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 0,
+ "is_standard": 1,
+ "modified": "2024-05-15 16:27:36.182545",
+ "modified_by": "Administrator",
+ "module": "Education",
+ "name": "Fees Receivable",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "report_name": "General Ledger",
+ "roles": [],
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "x_field": "account",
+ "y_axis": [
+  {
+   "color": "#29CD42",
+   "y_field": "balance"
+  },
+  {
+   "color": "#449CF0",
+   "y_field": "debit"
+  },
+  {
+   "color": "#CB2929",
+   "y_field": "credit"
+  }
+ ]
+}

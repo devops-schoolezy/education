@@ -20,6 +20,12 @@
   },
   {
    "card": "Paid Amount"
+  },
+  {
+   "card": "Total Strength(Teacher)"
+  },
+  {
+   "card": "Total Attendance (Today)"
   }
  ],
  "charts": [
@@ -44,15 +50,23 @@
    "width": "Half"
   },
   {
-   "chart": "Student Monthly Attendance Sheet",
-   "width": "Half"
-  },
-  {
    "chart": "Assessment Report",
    "width": "Half"
   },
   {
    "chart": "Assessment Result",
+   "width": "Half"
+  },
+  {
+   "chart": "Attendance Count",
+   "width": "Half"
+  },
+  {
+   "chart": "Employee Attendances",
+   "width": "Half"
+  },
+  {
+   "chart": "Payment Mode Collection Report",
    "width": "Half"
   }
  ],
@@ -63,7 +77,7 @@
  "idx": 0,
  "is_default": 1,
  "is_standard": 1,
- "modified": "2024-03-25 10:53:21.180540",
+ "modified": "2024-06-08 14:06:49.987977",
  "modified_by": "Administrator",
  "module": "Education",
  "name": "Education",

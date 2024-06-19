@@ -1,13 +1,14 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:title",
+ "autoname": "naming_series:",
  "creation": "2023-11-08 14:13:49.689470",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "naming_series",
   "title",
   "category",
   "based_on",
@@ -23,8 +24,7 @@
   {
    "fieldname": "title",
    "fieldtype": "Data",
-   "label": "Title",
-   "unique": 1
+   "label": "Title"
   },
   {
    "fieldname": "category",
@@ -75,15 +75,23 @@
    "fieldname": "message",
    "fieldtype": "Text Editor",
    "label": "Message"
+  },
+  {
+   "depends_on": "eval:doc.based_on == \"Program\"",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "EDU-ANMT-.YYYY.-",
+   "set_only_once": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-11-08 15:03:26.178606",
+ "modified": "2024-06-17 17:27:16.280901",
  "modified_by": "Administrator",
  "module": "Education",
  "name": "Announcement",
- "naming_rule": "By fieldname",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -101,5 +109,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_seen": 1
 }

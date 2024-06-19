@@ -2,6 +2,21 @@
  "cards": [
   {
    "card": "Student Fee Collection"
+  },
+  {
+   "card": "Total Students Present (Today)"
+  },
+  {
+   "card": "Total Students Absent (Today)"
+  },
+  {
+   "card": "Outstanding Amount"
+  },
+  {
+   "card": "Fees Outstanding"
+  },
+  {
+   "card": "Payment Mode"
   }
  ],
  "charts": [
@@ -28,6 +43,30 @@
   {
    "chart": "Student Fees Count",
    "width": "Half"
+  },
+  {
+   "chart": "Fees Receivable",
+   "width": "Half"
+  },
+  {
+   "chart": "Employee Attendances",
+   "width": "Half"
+  },
+  {
+   "chart": "Program wise Fee Collection-1",
+   "width": "Half"
+  },
+  {
+   "chart": "Attendance Count",
+   "width": "Half"
+  },
+  {
+   "chart": "Studentwise Fees Pending Chart",
+   "width": "Half"
+  },
+  {
+   "chart": "Payment Mode Collection Report",
+   "width": "Half"
   }
  ],
  "creation": "2024-04-06 15:29:27.241376",
@@ -35,10 +74,10 @@
  "docstatus": 0,
  "doctype": "Dashboard",
  "idx": 0,
- "is_default": 1,
+ "is_default": 0,
  "is_standard": 1,
- "modified": "2024-04-06 15:31:46.005942",
- "modified_by": "demo_admin@schoolezy.in",
+ "modified": "2024-06-08 14:00:21.745448",
+ "modified_by": "Administrator",
  "module": "Education",
  "name": "My Dashboard",
  "owner": "demo_admin@schoolezy.in"

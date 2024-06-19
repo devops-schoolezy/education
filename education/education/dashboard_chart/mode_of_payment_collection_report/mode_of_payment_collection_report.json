@@ -1,0 +1,33 @@
+{
+ "chart_name": "Mode of Payment Collection Report",
+ "chart_type": "Report",
+ "creation": "2024-06-08 13:53:45.750618",
+ "custom_options": "{\"x_field\": \"mode_of_payment\", \"chart_type\": \"Bar\", \"y_axis_fields\": [{\"idx\": 1, \"__islocal\": true, \"name\": \"row 1\", \"y_field\": \"sum\", \"color\": \"#ECAD4B\"}], \"y_fields\": [\"sum\"], \"colors\": [\"#ECAD4B\"]}",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "filters_json": "{}",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 0,
+ "is_standard": 1,
+ "modified": "2024-06-08 13:57:49.070793",
+ "modified_by": "Administrator",
+ "module": "Education",
+ "name": "Mode of Payment Collection Report",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "report_name": "Payment mode collection chart report",
+ "roles": [],
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Percentage",
+ "use_report_chart": 0,
+ "x_field": "mode_of_payment",
+ "y_axis": [
+  {
+   "color": "#ECAD4B",
+   "y_field": "sum"
+  }
+ ]
+}

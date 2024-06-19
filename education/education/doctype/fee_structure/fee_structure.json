@@ -18,6 +18,7 @@
   "components",
   "section_break_6",
   "column_break_11",
+  "facility__discounts",
   "total_amount",
   "accounts",
   "receivable_account",
@@ -159,12 +160,18 @@
   {
    "fieldname": "dimension_col_break",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "facility__discounts",
+   "fieldtype": "Select",
+   "label": "Facility  Discounts",
+   "options": "Transport\nSnacks"
   }
  ],
  "icon": "fa fa-flag",
  "is_submittable": 1,
  "links": [],
- "modified": "2023-02-09 16:09:50.125383",
+ "modified": "2024-05-24 13:14:07.538310",
  "modified_by": "Administrator",
  "module": "Education",
  "name": "Fee Structure",

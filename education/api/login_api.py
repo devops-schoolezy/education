@@ -28,26 +28,35 @@ def login(usr, pwd):
     
     api_generate = generate_keys(frappe.session.user)
     user = frappe.get_doc('User', frappe.session.user)
-    
-    students = frappe.db.get_list("Student",fields=["name", "first_name","gender"])
 
+    students = []
     stuprogdata = []
     stugrpdata = []
-    for stu in students:
-        students_program = frappe.db.get_list("Program Enrollment", 
-                            filters={"student": stu["name"]},
-                            fields=["student","program"])
-        if students_program:
-            stuprogdata.append(students_program)
-        
-        students_group = frappe.db.get_list("Student Group", 
-                            filters={"student": stu["name"]},
-                            fields=["name"])
-        if students_group:
-            for stugrp in students_group:
-                studentgrp = '{"student_id":"'+str(stu["name"])+'",'
-                studentgrp += '"section":"'+str(stugrp["name"])+'"}'
-            stugrpdata.append(json.loads(studentgrp))
+    instructor = []
+
+    if (user.user_category == "Student"):
+        students = frappe.db.get_list("Student",fields=["name", "first_name","gender"])
+
+        for stu in students:
+            students_program = frappe.db.get_list("Program Enrollment", 
+                                filters={"student": stu["name"]},
+                                fields=["student","program"])
+            if students_program:
+                stuprogdata.append(students_program)
+            
+            students_group = frappe.db.get_list("Student Group", 
+                                filters={"student": stu["name"]},
+                                fields=["name"])
+            if students_group:
+                for stugrp in students_group:
+                    studentgrp = '{"student_id":"'+str(stu["name"])+'",'
+                    studentgrp += '"section":"'+str(stugrp["name"])+'"}'
+                stugrpdata.append(json.loads(studentgrp))
+    else:
+        employee = frappe.db.get_list("Employee", filters={"user_id": user.email})
+        instructor = frappe.db.get_list("Instructor",
+                                filters={"employee": employee[0].name},
+                                fields=["name", "instructor_name", "status", "department", "employee"])
 
 
     # Query company[school] table to get the value for initial_setup field.
@@ -57,14 +66,14 @@ def login(usr, pwd):
     company_name = list_company[0].company_name
     custom_initial_setup = list_company[0].custom_initial_setup
     
-    company_list = frappe.db.get_list("Company", filters={"company_name": company_name}, fields=["company_name","custom_latitude","custom_longitude"])
+    company_list = frappe.db.get_list("Company", filters={"company_name": company_name}, fields=["company_name","custom_latitude","custom_longitude", "custom_surrounding_meters"])
     
     todayDate = frappe.utils.getdate()
     currentYear = todayDate.year
     currentMonth = todayDate.month
 
 # Calculate the academic year
-    if (currentMonth > 6) :
+    if (currentMonth > 4) :
         academicYear = str(currentYear) + "-" + str(currentYear+1)
     else:
         academicYear = str(currentYear-1) + "-" + str(currentYear)
@@ -95,6 +104,7 @@ def login(usr, pwd):
                 "section":stugrpdata,
                 "school":company_list,
                 "academic_year": dbAcademicYear,
+                "instructor": instructor,
                 "roles":user.roles
                 }
             }
