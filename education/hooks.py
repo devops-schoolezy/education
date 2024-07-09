@@ -200,10 +200,13 @@ after_install = "education.install.after_install"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"education.tasks.all"
-# 	],
+scheduler_events = {
+		"cron": {
+		"*/10 7-19 * * 1-6": [
+			"education.api.remote_essl.get_essl_data",
+		],
+	},
+}
 # 	"daily": [
 # 		"education.tasks.daily"
 # 	],

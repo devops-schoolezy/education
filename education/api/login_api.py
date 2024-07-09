@@ -33,6 +33,7 @@ def login(usr, pwd):
     stuprogdata = []
     stugrpdata = []
     instructor = []
+    driver = []
 
     if (user.user_category == "Student"):
         students = frappe.db.get_list("Student",fields=["name", "first_name","gender"])
@@ -54,9 +55,27 @@ def login(usr, pwd):
                 stugrpdata.append(json.loads(studentgrp))
     else:
         employee = frappe.db.get_list("Employee", filters={"user_id": user.email})
-        instructor = frappe.db.get_list("Instructor",
-                                filters={"employee": employee[0].name},
-                                fields=["name", "instructor_name", "status", "department", "employee"])
+        if employee[0].custom_is_teaching_staff == 1:
+            instructor = frappe.db.get_list("Instructor",
+                                    filters={"employee": employee[0].name},
+                                    fields=["name", "instructor_name", "status", "department", "employee"])
+        else:
+            try:
+                driver = frappe.db.sql("""
+                            select name, full_name, status, cell_number, employee
+                            from 
+                            `tabDriver` 
+                            where 
+                            employee = %s
+                            """, 
+                            (employee[0].name),
+                                as_dict=1,
+                            )
+            except Exception as e:
+                frappe.msgprint(_("Error: {0}".format(e), raise_exception=True))    
+            # driver = frappe.db.get_list("Driver",
+            #                         filters={"employee": employee[0].name},
+            #                         fields=["name", "full_name", "status", "cell_number", "employee"])
 
 
     # Query company[school] table to get the value for initial_setup field.
@@ -105,6 +124,7 @@ def login(usr, pwd):
                 "school":company_list,
                 "academic_year": dbAcademicYear,
                 "instructor": instructor,
+                "driver": driver,
                 "roles":user.roles
                 }
             }

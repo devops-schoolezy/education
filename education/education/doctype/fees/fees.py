@@ -146,6 +146,10 @@ class Fees(AccountsController):
 			merge_entries=False,
 		)
 
+	def on_payment_authorized(self, status):
+		frappe.call('education.api.razorpay_payment.on_payment_authorized', self, status)
+		pass
+
 
 def get_fee_list(
 	doctype, txt, filters, limit_start, limit_page_length=20, order_by="modified"
