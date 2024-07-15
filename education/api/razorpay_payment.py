@@ -84,7 +84,15 @@ def make_payment(doctype, docname):
 	return url
 
 	
+<<<<<<< HEAD
 def on_payment_authorized(self, status):
+=======
+<<<<<<< Updated upstream
+def on_payment_authorized(self, status):
+=======
+def on_payment_authorized(self, *args, **kwargs):
+>>>>>>> Stashed changes
+>>>>>>> bfaf253 (course custom fix)
 	logger.debug("on_payment_authorized called")
 	integration_request = frappe.get_all(
 							"Integration Request",
@@ -99,8 +107,18 @@ def on_payment_authorized(self, status):
 	logger.debug(f"Payment ID = {data.razorpay_payment_id}")
 	logger.debug(f"order ID = {data.order_id}")
 
+<<<<<<< HEAD
 	payment_req_doc = frappe.get_doc('Payment Request', data.order_id)
 	payment_req_doc.submit()
+=======
+<<<<<<< Updated upstream
+	payment_req_doc = frappe.get_doc('Payment Request', data.order_id)
+	payment_req_doc.submit()
+=======
+	payment_req_doc = frappe.get_doc('Payment Request', data.order_id, ignore_permissions=True)
+	# payment_req_doc.submit()
+>>>>>>> Stashed changes
+>>>>>>> bfaf253 (course custom fix)
 	payment_entry = create_payment_entry_against_fees(payment_req_doc, data, submit=True)
 
 	logger.debug(f"All done.......{payment_entry.name}")
