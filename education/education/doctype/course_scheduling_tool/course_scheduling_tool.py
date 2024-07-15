@@ -3,7 +3,7 @@
 
 
 import calendar
-
+import json
 import frappe
 from frappe import _
 from frappe.model.document import Document
@@ -11,6 +11,8 @@ from frappe.utils import add_days, getdate
 
 from education.education.utils import OverlapError
 
+# frappe.utils.logger.set_log_level("DEBUG")
+# logger = frappe.logger("course_schedule", allow_site=True, file_count=10)
 
 class CourseSchedulingTool(Document):
 	@frappe.whitelist()
@@ -27,10 +29,13 @@ class CourseSchedulingTool(Document):
 		self.instructor_name = frappe.db.get_value(
 			"Instructor", self.instructor, "instructor_name"
 		)
+		# logger.debug(f"student group = {self.student_group}")
 
 		group_based_on, course = frappe.db.get_value(
 			"Student Group", self.student_group, ["group_based_on", "course"]
 		)
+		# logger.debug(f"group_based_on = {group_based_on}")
+		# logger.debug(f"course = {course}")
 
 		if group_based_on == "Course":
 			self.course = course
@@ -117,3 +122,35 @@ class CourseSchedulingTool(Document):
 		course_schedule.from_time = self.from_time
 		course_schedule.to_time = self.to_time
 		return course_schedule
+ 
+@frappe.whitelist(allow_guest=True)
+def bulk_json_course_schedule(schedules, batch_size=100):
+	if isinstance(schedules, str):
+		try:
+			schedules = json.loads(schedules)  # Parse the JSON string to a list of dictionaries
+		except json.JSONDecodeError as e:
+			frappe.throw(f"Error parsing schedules: {e}")
+
+	total_records = len(schedules)
+	for i in range(0, total_records, batch_size):
+		batch = schedules[i:i+batch_size]
+		frappe.enqueue(method=enqueue_bulk_json_course_schedule, 
+					queue='long', 
+					timeout=3000, 
+					schedules=batch)
+
+def enqueue_bulk_json_course_schedule(schedules):
+	for schedule in schedules:
+		doc = frappe.get_single("Course Scheduling Tool")
+
+		doc.student_group = schedule.get("student_group")
+		doc.course = schedule.get("course")
+		doc.room = schedule.get("room")
+		doc.instructor = schedule.get("instructor")
+		doc.from_time = schedule.get("from_time")
+		doc.to_time = schedule.get("to_time")
+		doc.course_start_date = schedule.get("course_start_date")
+		doc.course_end_date = schedule.get("course_end_date")
+		doc.reschedule = schedule.get("reschedule")
+		
+		doc.schedule_course(schedule.get("days"))

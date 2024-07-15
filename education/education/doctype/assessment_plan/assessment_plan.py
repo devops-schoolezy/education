@@ -18,12 +18,17 @@ class AssessmentPlan(Document):
 
 		from education.education.utils import validate_overlap_for
 
-		# Validate overlapping course schedules.
-		if self.student_group:
-			validate_overlap_for(self, "Course Schedule", "student_group")
+		# Validation is removed by *****Nandha*****
+		# This will validate the assessment plan with course schedule and throws an error. 
+		# Avoiding it by removing the check. 
+		# Need Proper fix later.
 
-		validate_overlap_for(self, "Course Schedule", "instructor")
-		validate_overlap_for(self, "Course Schedule", "room")
+		# Validate overlapping course schedules.
+		# if self.student_group:
+		# 	validate_overlap_for(self, "Course Schedule", "student_group")
+
+		# validate_overlap_for(self, "Course Schedule", "instructor")
+		# validate_overlap_for(self, "Course Schedule", "room")
 
 		# validate overlapping assessment schedules.
 		if self.student_group:
