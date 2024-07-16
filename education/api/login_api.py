@@ -54,8 +54,9 @@ def login(usr, pwd):
                     studentgrp += '"section":"'+str(stugrp["name"])+'"}'
                 stugrpdata.append(json.loads(studentgrp))
     else:
-        employee = frappe.db.get_list("Employee", filters={"user_id": user.email})
-<<<<<<< Updated upstream
+        employee = frappe.db.get_list("Employee", 
+                                      filters={"user_id": user.email},
+                                      fields=["name", "custom_is_teaching_staff"])
         if employee[0].custom_is_teaching_staff == 1:
             instructor = frappe.db.get_list("Instructor",
                                     filters={"employee": employee[0].name},
@@ -77,12 +78,6 @@ def login(usr, pwd):
             # driver = frappe.db.get_list("Driver",
             #                         filters={"employee": employee[0].name},
             #                         fields=["name", "full_name", "status", "cell_number", "employee"])
-=======
-        if employee:
-            instructor = frappe.db.get_list("Instructor",
-                                filters={"employee": employee[0].name},
-                                fields=["name", "instructor_name", "status", "department", "employee"])
->>>>>>> Stashed changes
 
 
     # Query company[school] table to get the value for initial_setup field.
