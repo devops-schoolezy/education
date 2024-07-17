@@ -1,0 +1,66 @@
+<h1 class="text-center">{%= __("Time Table") %} - {%= data[0]["student_group"] %}</h1>
+<table  class="table table-bordered">
+    {% var date_list_length = 1 %}
+    {% var unique_dates = [] %}
+    <thead>
+        <tr>
+            <th class="time-slot">Time/Date</th>
+            <th><b>{%= data[0]["schedule_date"] %} <br>
+                {%= data[0]["day"] %} </b>
+            </th>
+            {% var j %}
+            {% var k %}
+            {% for(j=1, k=data.length; j<k; j++) { %}
+                {% if (data[j]["schedule_date"] != data[j-1]["schedule_date"]) { %}
+                    {% unique_dates.push(data[j-1]["schedule_date"]) %}
+                    <th> <b> {%= data[j]["schedule_date"] %} <br>
+                             {%= data[j]["day"] %} </b> 
+                    </th>
+                    {% date_list_length = date_list_length + 1 %}
+                {% } %}
+            {% } %}
+            {% unique_dates.push(data[j-1]["schedule_date"]) %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for(var hour=7, k=18; hour<k; hour++)  { %}  
+            <tr>
+                {% var found = 0 %}
+                {% for(var jjj=0, kkk=data.length; jjj<kkk; jjj++) { %}   
+                    {% if ((data[jjj]["from_time"].split(':')[0]) == hour) { %}
+                        {% found = 1 %}
+                        {% break %}
+                    {% } %}
+                {% } %}
+                {% if (found == 0) { %}
+                    {% continue %}
+                {% } %}
+                <td class="time-slot">
+                    {% if (hour < 12) %}
+                        {%= hour %} AM
+                    {% else %}
+                        {% if (hour == 12) %}
+                            {%= hour %} PM
+                        {% else %}
+                            {%= hour - 12 %} PM
+                        {% endif %}
+                    {% endif %}
+                </td>
+                {% for(var dd=0, kd=unique_dates.length; dd<kd; dd++) { %} 
+                    <td> 
+                        {% for(var jj=0, kk=data.length; jj<kk; jj++) { %}   
+                            {% if (data[dd]["schedule_date"] == data[jj]["schedule_date"]) { %}
+                                {% if ((data[jj]["from_time"].split(':')[0]) == hour) { %}
+                                    <b> {%= data[jj]["course"] %} </b> 
+                                    <br> {%= data[jj]["from_time"] %} - {%= data[jj]["to_time"] %}  <br>
+                                {% } %}
+                            {% } %}
+                        {% } %}
+                    </td>
+                {% } %}
+            </tr>
+        {% } %}
+    
+    </tbody>
+</table>
+<p class="text-right text-muted">Printed On {%= frappe.datetime.str_to_user(frappe.datetime.get_datetime_as_string()) %}</p>
