@@ -35,9 +35,10 @@ def login(usr, pwd):
     instructor = []
     driver = []
 
-    if (user.user_category == "Student"):
-        students = frappe.db.get_list("Student",fields=["name", "first_name","gender"])
+    # if (user.user_category == "Student"):
+    students = frappe.db.get_list("Student",fields=["name", "first_name","gender"])
 
+    if len(students) > 0:
         for stu in students:
             students_program = frappe.db.get_list("Program Enrollment", 
                                 filters={"student": stu["name"]},
