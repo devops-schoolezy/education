@@ -57,24 +57,25 @@ def login(usr, pwd):
         employee = frappe.db.get_list("Employee", 
                                       filters={"user_id": user.email},
                                       fields=["name", "custom_is_teaching_staff"])
-        if employee[0].custom_is_teaching_staff == 1:
-            instructor = frappe.db.get_list("Instructor",
-                                    filters={"employee": employee[0].name},
-                                    fields=["name", "instructor_name", "status", "department", "employee"])
-        else:
-            try:
-                driver = frappe.db.sql("""
-                            select name, full_name, status, cell_number, employee
-                            from 
-                            `tabDriver` 
-                            where 
-                            employee = %s
-                            """, 
-                            (employee[0].name),
-                                as_dict=1,
-                            )
-            except Exception as e:
-                frappe.msgprint(_("Error: {0}".format(e), raise_exception=True))    
+        if len(employee) > 0: 
+            if employee[0].custom_is_teaching_staff == 1:
+                instructor = frappe.db.get_list("Instructor",
+                                        filters={"employee": employee[0].name},
+                                        fields=["name", "instructor_name", "status", "department", "employee"])
+            else:
+                try:
+                    driver = frappe.db.sql("""
+                                select name, full_name, status, cell_number, employee
+                                from 
+                                `tabDriver` 
+                                where 
+                                employee = %s
+                                """, 
+                                (employee[0].name),
+                                    as_dict=1,
+                                )
+                except Exception as e:
+                    frappe.msgprint(e)    
             # driver = frappe.db.get_list("Driver",
             #                         filters={"employee": employee[0].name},
             #                         fields=["name", "full_name", "status", "cell_number", "employee"])
