@@ -36,7 +36,16 @@ def login(usr, pwd):
     driver = []
 
     # if (user.user_category == "Student"):
-    students = frappe.db.get_list("Student",fields=["name", "first_name","gender"])
+    employee = []
+    try:
+        employee = frappe.db.get_list("Employee", 
+                                      filters={"user_id": user.email},
+                                      fields=["name", "custom_is_teaching_staff"])
+    except Exception as e:    
+        employee = []
+        
+    if len(employee) == 0: 
+        students = frappe.db.get_list("Student",fields=["name", "first_name","gender"])
 
     if len(students) > 0:
         for stu in students:
@@ -55,9 +64,6 @@ def login(usr, pwd):
                     studentgrp += '"section":"'+str(stugrp["name"])+'"}'
                 stugrpdata.append(json.loads(studentgrp))
     else:
-        employee = frappe.db.get_list("Employee", 
-                                      filters={"user_id": user.email},
-                                      fields=["name", "custom_is_teaching_staff"])
         if len(employee) > 0: 
             if employee[0].custom_is_teaching_staff == 1:
                 instructor = frappe.db.get_list("Instructor",
