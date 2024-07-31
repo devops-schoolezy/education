@@ -16,10 +16,6 @@
   "academic_term",
   "section_break_4",
   "components",
-  "section_break_6",
-  "column_break_11",
-  "facility__discounts",
-  "total_amount",
   "accounts",
   "receivable_account",
   "income_account",
@@ -92,21 +88,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "section_break_6",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_11",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "total_amount",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Total Amount",
-   "read_only": 1
-  },
-  {
    "fieldname": "accounts",
    "fieldtype": "Section Break",
    "label": "Accounts"
@@ -160,18 +141,12 @@
   {
    "fieldname": "dimension_col_break",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "facility__discounts",
-   "fieldtype": "Select",
-   "label": "Facility  Discounts",
-   "options": "Transport\nSnacks"
   }
  ],
  "icon": "fa fa-flag",
  "is_submittable": 1,
  "links": [],
- "modified": "2024-05-24 13:14:07.538310",
+ "modified": "2024-07-30 13:28:32.491406",
  "modified_by": "Administrator",
  "module": "Education",
  "name": "Fee Structure",

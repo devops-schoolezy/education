@@ -22,7 +22,7 @@ def get_essl_data():
     device_id_list_str = ''
     deviceLists = getDeviceList()
 
-    # logger.debug(deviceLists)
+    logger.debug(deviceLists)
 
     cursor = db_connection.cursor()
 
@@ -32,12 +32,16 @@ def get_essl_data():
         # device_id_list_str += f"'{id.device_id}'"
         
         current_datetime = now()
-        lastSynchedTime = getLastSynchedTime(id.shift_type)
-        if len(lastSynchedTime) == 0:
+        lastSynchedTime = ""
+        shiftTypeDetails = getLastSynchedTime(id.shift_type)
+        logger.debug(shiftTypeDetails)
+        if shiftTypeDetails:
+            lastSynchedTime = shiftTypeDetails[0].last_sync_of_checkin
+        else:
             lastSynchedTime = current_datetime
 
+        logger.debug(lastSynchedTime)
         sql_query = f"SELECT dlp.DeviceLogId, dlp.DownloadDate, dlp.DeviceId, dlp.UserId, dlp.LogDate, dlp.Direction, emp.EmployeeCode FROM DeviceLogs_Processed dlp, Employees emp WHERE dlp.DeviceId = {id.device_id} AND dlp.LogDate > '{lastSynchedTime}' AND dlp.UserId = emp.EmployeeCodeInDevice"
-        logger.debug(sql_query)
         
         # Example query to fetch attendance data
         cursor.execute(sql_query)
@@ -47,7 +51,7 @@ def get_essl_data():
 
         # Convert each tuple to a dictionary
         json_data = []
-        device_user_ids = []
+        device_user_ids = set()
         for row in attendance_data:
             # Replace column names with actual names from your query
             row_dict = {"DeviceLogId": row[0], "DownloadDate": row[1],  
@@ -55,15 +59,16 @@ def get_essl_data():
                         "LogDate": row[4], "Direction": row[5],
                         "EmployeeCode": row[6]}
             json_data.append(row_dict)
-            device_user_ids.append(row[3])
+            device_user_ids.add(row[3])
 
+        logger.debug(device_user_ids)
         if json_data:
             # Convert the list of dictionaries to JSON string
             final_json = json.dumps(json_data, default=datetime_handler)
             # Load the JSON string into a Python object
             data = json.loads(final_json)
             device_ids_mapped_to_emp_ids = []
-
+            
             if isinstance(data, list):
                 device_ids_mapped_to_emp_ids = frappe.db.sql(
                     """select
@@ -71,9 +76,12 @@ def get_essl_data():
                     where
                         attendance_device_id in (%s)
                     """
-                    % (", ".join(["%s"] * len(device_user_ids))),
+                    % ", ".join(["%s"] * len(device_user_ids)),
+		            tuple(device_user_ids),
+                    as_dict=1,
                 )
 
+                # logger.debug(f"Emp IDs = {device_ids_mapped_to_emp_ids}")
                 for attendance in data:
                     employee_id = ""
                     for emp_detail in device_ids_mapped_to_emp_ids:
