@@ -12,11 +12,11 @@
  "modified": "2024-07-17 16:01:43.751914",
  "modified_by": "Administrator",
  "module": "Education",
- "name": "Weekly Timetable",
+ "name": "Weekly TimeTable",
  "owner": "Administrator",
  "prepared_report": 0,
  "ref_doctype": "Course Schedule",
- "report_name": "Weekly Timetable",
+ "report_name": "Weekly TimeTable",
  "report_type": "Script Report",
  "roles": [
   {

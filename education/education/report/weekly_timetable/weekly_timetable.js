@@ -1,7 +1,7 @@
 // Copyright (c) 2024, Frappe Technologies Pvt. Ltd. and contributors
 // For license information, please see license.txt
 
-frappe.query_reports["Weekly Timetable"] = {
+frappe.query_reports["Weekly TimeTable"] = {
 	"filters": [
 		// {
 		// 	"fieldname":"academic_year",
