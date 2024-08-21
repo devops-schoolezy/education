@@ -201,11 +201,14 @@ after_install = "education.install.after_install"
 # ---------------
 
 scheduler_events = {
-		"cron": {
+	"cron": {
 		"*/10 7-19 * * 1-6": [
 			"education.api.remote_essl.get_essl_data",
 		],
 	},
+    # "all": [
+    #     "education.api.custom_code.gps_data_listener.start_gps_data_listener"
+    # ]
 }
 # 	"daily": [
 # 		"education.tasks.daily"

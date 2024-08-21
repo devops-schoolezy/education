@@ -5,6 +5,8 @@ from frappe import auth
 import json
 from frappe.utils import floor, flt, today, cint
 from frappe import _
+# frappe.utils.logger.set_log_level("DEBUG")
+# logger = frappe.logger("login api", allow_site=True, file_count=10)
 
 @frappe.whitelist( allow_guest=True )
 def login(usr, pwd):
@@ -34,6 +36,7 @@ def login(usr, pwd):
     stugrpdata = []
     instructor = []
     driver = []
+    transport = []
 
     # if (user.user_category == "Student"):
     employee = []
@@ -48,6 +51,29 @@ def login(usr, pwd):
         students = frappe.db.get_list("Student",fields=["name", "first_name","gender"])
 
     if len(students) > 0:
+        
+        student_id_list = [student["name"] for student in students]
+        # logger.debug(student_id_list)
+        # query = """
+        #     SELECT v.vehicle_no AS vehicle
+        #     FROM `tabVehicles` v
+        #     INNER JOIN `tabTrackezy Map` m ON v.parent = m.name
+        #     WHERE m.student IN (%s)
+        #     """ % ", ".join(["%s"] * len(student_id_list)), tuple(student_id_list), as_dict=1,
+        # logger.debug(query)
+        transport = frappe.db.sql("""
+            SELECT distinct v.vehicle_no, a.license_plate
+            FROM `tabVehicles` v, `tabTrackezy Map` m, `tabVehicle Alias` a
+            WHERE v.parent = m.name AND 
+            a.vehicle_no = v.vehicle_no AND
+            m.student IN (%s)
+            """ % ", ".join(["%s"] * len(student_id_list)), tuple(student_id_list), as_dict=1,)
+        # transport = frappe.db.sql("""
+        #     SELECT v.vehicle_no AS vehicle
+        #     FROM `tabVehicles` v
+        #     INNER JOIN `tabTrackezy Map` m ON v.parent = m.name
+        #     WHERE m.student IN (%s)
+        #     """ % ','.join(['%s'] * len(student_id_list)))
         for stu in students:
             students_program = frappe.db.get_list("Program Enrollment", 
                                 filters={"student": stu["name"]},
@@ -129,6 +155,7 @@ def login(usr, pwd):
                 "user_image":user.user_image,
                 "custom_initial_setup":custom_initial_setup,
                 "childrens":students,
+                "transport":transport,
                 "program":stuprogdata,
                 "section":stugrpdata,
                 "school":company_list,

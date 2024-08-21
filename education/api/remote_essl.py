@@ -35,7 +35,7 @@ def get_essl_data():
         lastSynchedTime = ""
         shiftTypeDetails = getLastSynchedTime(id.shift_type)
         logger.debug(shiftTypeDetails)
-        if shiftTypeDetails:
+        if len(shiftTypeDetails[0].last_sync_of_checkin) > 0:
             lastSynchedTime = shiftTypeDetails[0].last_sync_of_checkin
         else:
             lastSynchedTime = current_datetime
