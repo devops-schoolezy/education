@@ -22,7 +22,7 @@ def get_essl_data():
     device_id_list_str = ''
     deviceLists = getDeviceList()
 
-    logger.debug(deviceLists)
+    # logger.debug(deviceLists)
 
     cursor = db_connection.cursor()
 
@@ -34,15 +34,16 @@ def get_essl_data():
         current_datetime = now()
         lastSynchedTime = ""
         shiftTypeDetails = getLastSynchedTime(id.shift_type)
-        logger.debug(shiftTypeDetails)
-        if len(shiftTypeDetails[0].last_sync_of_checkin) > 0:
+        # logger.debug(shiftTypeDetails)
+
+        if shiftTypeDetails[0].last_sync_of_checkin:
             lastSynchedTime = shiftTypeDetails[0].last_sync_of_checkin
         else:
             lastSynchedTime = current_datetime
 
-        logger.debug(lastSynchedTime)
+        # logger.debug(lastSynchedTime)
         sql_query = f"SELECT dlp.DeviceLogId, dlp.DownloadDate, dlp.DeviceId, dlp.UserId, dlp.LogDate, dlp.Direction, emp.EmployeeCode FROM DeviceLogs_Processed dlp, Employees emp WHERE dlp.DeviceId = {id.device_id} AND dlp.LogDate > '{lastSynchedTime}' AND dlp.UserId = emp.EmployeeCodeInDevice"
-        
+        # logger.debug(sql_query)
         # Example query to fetch attendance data
         cursor.execute(sql_query)
 
@@ -61,18 +62,19 @@ def get_essl_data():
             json_data.append(row_dict)
             device_user_ids.add(row[3])
 
-        logger.debug(device_user_ids)
-        if json_data:
+        # logger.debug(f"json_data = {json_data}")
+        # logger.debug(device_user_ids)
+        if json_data and device_user_ids:
             # Convert the list of dictionaries to JSON string
             final_json = json.dumps(json_data, default=datetime_handler)
+            
             # Load the JSON string into a Python object
             data = json.loads(final_json)
             device_ids_mapped_to_emp_ids = []
-            
             if isinstance(data, list):
                 device_ids_mapped_to_emp_ids = frappe.db.sql(
                     """select
-                        name, employee, attendance_device_id from tabEmployee
+                        name, employee_name, attendance_device_id from tabEmployee
                     where
                         attendance_device_id in (%s)
                     """
@@ -88,19 +90,25 @@ def get_essl_data():
                         if (emp_detail.attendance_device_id == attendance["UserId"]):
                             employee_id = emp_detail.name
                             break
+                    # logger.debug(f"employee_id = {employee_id}")
 
-                    if len(employee_id) > 0 :
-                        doc = frappe.new_doc("Employee Checkin")
-                        doc.employee = employee_id
-                        doc.time = attendance["LogDate"]
-                        doc.device_id = attendance["UserId"]
-                        doc.log_type = attendance["Direction"].upper()
-                        #doc.skip_auto_attendance = "1"
-                        doc.insert()
+                    if employee_id:
+                        try:
+                            doc = frappe.new_doc("Employee Checkin")
+                            doc.employee = employee_id
+                            doc.time = attendance["LogDate"]
+                            doc.device_id = attendance["UserId"]
+                            doc.log_type = attendance["Direction"].upper()
+                            #doc.skip_auto_attendance = "1"
+                            doc.insert()
+                            frappe.db.commit()
+                        except Exception as e:
+                            logger.debug(f"Error: {e}. Employee = {employee_id}")
             else:
                 logger.debug("Unexpected JSON format. Expected a list of dictionaries.")
 
             #Update the last_synched date with current datetime.
+            # logger.debug(f"updating sync time to {current_datetime}")
             frappe.db.sql("""
                         UPDATE `tabShift Type` SET last_sync_of_checkin = %s WHERE name = %s
                         """,
