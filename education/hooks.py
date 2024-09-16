@@ -189,13 +189,15 @@ after_install = "education.install.after_install"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Fees": {
+        "before_validate": "education.api.fees.add_program_enrollment",
+        "on_submit": "education.api.fees.create_payment_entry_against_fees"
+    },
+    "Payment Entry": {
+        "on_submit": "education.api.fees.payment_reconcile"
+	}
+}
 
 # Scheduled Tasks
 # ---------------

@@ -3,6 +3,7 @@
  "allow_import": 1,
  "autoname": "naming_series:",
  "creation": "2015-09-22 16:57:22.143710",
+ "default_email_template": "Fee Payment Confirmation Email Template",
  "doctype": "DocType",
  "document_type": "Document",
  "engine": "InnoDB",
@@ -368,7 +369,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-29 11:59:36.555778",
+ "modified": "2024-08-26 14:08:16.074367",
  "modified_by": "Administrator",
  "module": "Education",
  "name": "Fees",
@@ -420,5 +421,6 @@
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
- "title_field": "student_name"
+ "title_field": "student_name",
+ "track_changes": 1
 }
