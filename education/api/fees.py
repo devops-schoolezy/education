@@ -119,7 +119,7 @@ def add_program_enrollment(doc, method):
             if not doc.student_name:
                 doc.student_name = program_enrollment.student_name
         else:
-            frappe.throw("Program Enrollment not found for the student: {}".format(doc.student))
+            frappe.throw(f"Program Enrollment not found for the student: {doc.student}")
 
 # @frappe.whitelist()
 def payment_reconcile(doc, method):
