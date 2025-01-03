@@ -7,7 +7,8 @@
  "field_order": [
   "guardian",
   "guardian_name",
-  "relation"
+  "relation",
+  "occupation"
  ],
  "fields": [
   {
@@ -15,8 +16,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Guardian",
-   "options": "Guardian",
-   "reqd": 1
+   "options": "Guardian"
   },
   {
    "fetch_from": "guardian.guardian_name",
@@ -24,9 +24,7 @@
    "fieldtype": "Data",
    "in_global_search": 1,
    "in_list_view": 1,
-   "label": "Guardian Name",
-   "read_only": 1,
-   "reqd": 1
+   "label": "Guardian Name"
   },
   {
    "fieldname": "relation",
@@ -34,11 +32,19 @@
    "in_list_view": 1,
    "label": "Relation",
    "options": "\nMother\nFather\nOthers"
+  },
+  {
+   "fetch_from": "guardian.guardian_name",
+   "fieldname": "occupation",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "label": "Occupation"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2023-02-14 17:05:21.300964",
+ "modified": "2024-12-27 17:50:28.370692",
  "modified_by": "Administrator",
  "module": "Education",
  "name": "Student Guardian",

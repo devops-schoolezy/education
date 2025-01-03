@@ -93,6 +93,7 @@
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Naming Series",
    "no_copy": 1,
    "options": "EDU-APP-.YYYY.-",
@@ -168,7 +169,7 @@
    "fieldtype": "Data",
    "label": "Student Email Address",
    "options": "Email",
-   "unique": 1
+   "reqd": 1
   },
   {
    "fieldname": "student_mobile_number",
@@ -292,7 +293,7 @@
  ],
  "image_field": "image",
  "links": [],
- "modified": "2023-01-17 10:50:53.972214",
+ "modified": "2024-12-27 17:22:27.949469",
  "modified_by": "Administrator",
  "module": "Education",
  "name": "Student Applicant",

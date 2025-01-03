@@ -5,20 +5,20 @@
 frappe.query_reports["Final Assessment Grades"] = {
 	"filters": [
 		{
-			"fieldname":"academic_year",
+			"fieldname": "academic_year",
 			"label": __("Academic Year"),
 			"fieldtype": "Link",
 			"options": "Academic Year",
 			"reqd": 1
 		},
 		{
-			"fieldname":"student_group",
+			"fieldname": "student_group",
 			"label": __("Student Group"),
 			"fieldtype": "Link",
 			"options": "Student Group",
 			"reqd": 1,
-			"get_query": function() {
-				return{
+			"get_query": function () {
+				return {
 					filters: {
 						"group_based_on": "Batch",
 						"academic_year": frappe.query_report.get_filter_value('academic_year')
@@ -27,12 +27,12 @@ frappe.query_reports["Final Assessment Grades"] = {
 			}
 		},
 		{
-			"fieldname":"assessment_group",
+			"fieldname": "assessment_group",
 			"label": __("Assessment Group"),
 			"fieldtype": "Link",
 			"options": "Assessment Group",
 			"reqd": 1
 		}
-
-	]
+	],
+	
 }

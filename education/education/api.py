@@ -32,27 +32,72 @@ def enroll_student(source_name):
 	frappe.publish_realtime(
 		"enroll_student_progress", {"progress": [1, 4]}, user=frappe.session.user
 	)
+
+	student_applicant = frappe.db.get_value(
+		"Student Applicant", source_name, ["student_category", "program", "custom_name", 
+											"custom_occupation", "custom_alternate_number",
+											"custom_relation", "name", "custom_sibling_name",
+											"custom_sibling_gender", "custom_sibling_dob",
+											"custom_sibling_program", "custom_sibling_institution",
+											"custom_sibling_studying_in_same_institute"], as_dict=True
+	)
+
+	if student_applicant.custom_name:
+		new_guardian_doc = frappe.get_doc({
+			"doctype": "Guardian",
+			"guardian_name": student_applicant.custom_name,
+			"occupation": student_applicant.custom_occupation or '',
+			"alternate_number": student_applicant.custom_alternate_number or ''
+		}).insert(ignore_permissions=True)
+
+		frappe.get_doc({
+			"doctype": "Student Guardian",
+			"guardian": new_guardian_doc.name,  # Link using the Guardian ID
+			"relation": student_applicant.custom_relation,
+			"occupation": student_applicant.custom_occupation or '',
+			"parent": student_applicant.name,
+			"parentfield": 'guardians',
+			"parenttype": 'Student Applicant'
+		}).insert(ignore_permissions=True)
+
+	if student_applicant.custom_sibling_name:
+		frappe.get_doc({
+			"doctype": "Student Sibling",
+			"full_name": student_applicant.custom_sibling_name,
+			"gender": student_applicant.custom_sibling_gender or '',
+			"date_of_birth": student_applicant.custom_sibling_dob or '',
+			"program": student_applicant.custom_sibling_program or '',
+			"institution": student_applicant.custom_sibling_institution or '',
+			"studying_in_same_institute": student_applicant.custom_sibling_studying_in_same_institute or '',
+			"parent": student_applicant.name,
+			"parentfield": 'siblings',
+			"parenttype": 'Student Applicant'
+		}).insert(ignore_permissions=True)
+
 	student = get_mapped_doc(
 		"Student Applicant",
 		source_name,
 		{
 			"Student Applicant": {
 				"doctype": "Student",
-				"field_map": {"name": "student_applicant"},
+				"field_map": {"name": "student_applicant",
+				  			  "program": "custom_program"
+							  },
 			}
 		},
 		ignore_permissions=True,
 	)
 	student.save()
-
-	student_applicant = frappe.db.get_value(
-		"Student Applicant", source_name, ["student_category", "program"], as_dict=True
-	)
+	
 	program_enrollment = frappe.new_doc("Program Enrollment")
 	program_enrollment.student = student.name
 	program_enrollment.student_category = student_applicant.student_category
 	program_enrollment.student_name = student.student_name
 	program_enrollment.program = student_applicant.program
+	# program_enrollment.academic_year = student_applicant.academic_year
+	# program_enrollment.academic_term = student_applicant.academic_term
+	# program_enrollment.save()
+	# program_enrollment.submit()
 	frappe.publish_realtime(
 		"enroll_student_progress", {"progress": [2, 4]}, user=frappe.session.user
 	)
