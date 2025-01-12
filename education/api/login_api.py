@@ -4,8 +4,8 @@ from frappe import auth
 
 import json
 from frappe import _
-# frappe.utils.logger.set_log_level("DEBUG")
-# logger = frappe.logger("login api", allow_site=True, file_count=10)
+frappe.utils.logger.set_log_level("DEBUG")
+logger = frappe.logger("login_api", allow_site=True, file_count=10)
 
 @frappe.whitelist( allow_guest=True )
 def login(usr, pwd):
@@ -36,18 +36,27 @@ def login(usr, pwd):
     instructor = []
     driver = []
     transport = []
+    emp_id = ""
 
     # if (user.user_category == "Student"):
-    employee = []
+    # employee = []
     try:
-        employee = frappe.db.get_list("Employee", 
-                                      filters={"user_id": user.email},
-                                      fields=["name", "custom_is_teaching_staff"])
-    except Exception as e:    
-        employee = []
+        # logger.debug(f"entered emp == {user.email}")
+        # employee1 = frappe.db.get_list("Employee", 
+        #                               filters={"user_id": user.email},
+        #                               fields=["name", "custom_is_teaching_staff"])
+        # logger.debug(f"employee id = {employee} ---- {len(employee)}")
+        emp_id, custom_is_teaching_staff = frappe.db.get_value('Employee', {'user_id': user.email}, ['name', 'custom_is_teaching_staff'])
+        # logger.debug(f"employee id1 = {emp_id} ---- {custom_is_teaching_staff}")
+    except Exception as e:  
+        # logger.debug(f"exception == {e}")  
+        emp_id = ""
+        custom_is_teaching_staff = 0
         
-    if len(employee) == 0: 
+    if len(emp_id) == 0: 
+        # based on permission it will retreive only the students who are accessible
         students = frappe.db.get_list("Student",fields=["name", "first_name","gender"])
+        logger.debug(f"students... {len(students)}")
 
     if len(students) > 0:
         
@@ -89,10 +98,10 @@ def login(usr, pwd):
                     studentgrp += '"section":"'+str(stugrp["name"])+'"}'
                 stugrpdata.append(json.loads(studentgrp))
     else:
-        if len(employee) > 0: 
-            if employee[0].custom_is_teaching_staff == 1:
+        if len(emp_id) > 0: 
+            if custom_is_teaching_staff == 1:
                 instructor = frappe.db.get_list("Instructor",
-                                        filters={"employee": employee[0].name},
+                                        filters={"employee": emp_id},
                                         fields=["name", "instructor_name", "status", "department", "employee"])
             else:
                 try:
@@ -103,7 +112,7 @@ def login(usr, pwd):
                                 where 
                                 employee = %s
                                 """, 
-                                (employee[0].name),
+                                (emp_id),
                                     as_dict=1,
                                 )
                 except Exception as e:
