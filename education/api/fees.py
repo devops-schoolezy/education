@@ -123,35 +123,39 @@ def add_program_enrollment(doc, method):
 
 # @frappe.whitelist()
 def payment_reconcile(doc, method):
-    return
-#     # Create a new Process Payment Reconciliation document
-#         reconciliation = frappe.get_doc({
-#             "doctype": "Process Payment Reconciliation",
-#             "company": doc.company,
-#             "party_type": doc.party_type,
-#             "party": doc.party,
-#             "receivable_payable_account": doc.paid_from
-#         })
+    # return
+    default_advance_account = frappe.db.get_value(
+                                            "Company", doc.company, "default_advance_paid_account"
+                                            )
+    # Create a new Process Payment Reconciliation document
+    reconciliation = frappe.get_doc({
+        "doctype": "Process Payment Reconciliation",
+        "company": doc.company,
+        "party_type": doc.party_type,
+        "party": doc.party,
+        "receivable_payable_account": doc.paid_from,
+        "default_advance_account": default_advance_account
+    })
 
-#     # Add references to the Fees linked with this payment entry
-#     # for reference in doc.references:
-#     #     if reference.reference_doctype == "Fees":
-#     #         reconciliation.append("references", {
-#     #             "reference_doctype": reference.reference_doctype,
-#     #             "reference_name": reference.reference_name,
-#     #             "allocated_amount": reference.allocated_amount,
-#     #         })
+    # Add references to the Fees linked with this payment entry
+    # for reference in doc.references:
+    #     if reference.reference_doctype == "Fees":
+    #         reconciliation.append("references", {
+    #             "reference_doctype": reference.reference_doctype,
+    #             "reference_name": reference.reference_name,
+    #             "allocated_amount": reference.allocated_amount,
+    #         })
 
-#     # Save the document
-#     reconciliation.insert(ignore_permissions=True)
-#     reconciliation.submit()
-#     # frappe.db.commit()
+    # Save the document
+    reconciliation.insert(ignore_permissions=True)
+    reconciliation.submit()
+    # frappe.db.commit()
 
-#     #trigger the job in background
-#     trigger_reconciliation_for_queued_docs()
-#     # trigger_job_for_doc(reconciliation)
-#     # return
-#     # pass
+    #trigger the job in background
+    trigger_reconciliation_for_queued_docs()
+    # trigger_job_for_doc(reconciliation)
+    # return
+    # pass
 
 
 
